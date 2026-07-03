@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=EB+Garamond:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#FFFFFF;color:#1A1A1A;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-family:'EB Garamond',Georgia,serif;overflow-x:hidden}
+  ::selection{background:#1A1A1A;color:#ffffff}
+  img{display:block;max-width:100%}
+  @keyframes lhMenu{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes lhFade{from{opacity:0}to{opacity:1}}
+  @keyframes lhDrawer{from{transform:translateX(100%)}to{transform:translateX(0)}}
+  @keyframes lhToast{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:1480px){
+    [data-mobile-hide]{display:none !important}
+    [data-mobile-only]{display:inline-flex !important}
+  }
+</style>
+</helmet>
+
+<div data-screen-label="Product Detail" style="background:#FFFFFF">
+
+  <!-- ANNOUNCEMENT -->
+  <div style="background:#F0EDE7;color:#5A5A5A;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.26em;text-transform:uppercase;text-align:center;padding:11px 16px;border-bottom:1px solid rgba(0,0,0,.14)">
+    Complimentary white&#8209;glove delivery &amp; placement on orders over Rs. 500,000
+  </div>
+
+  <!-- HEADER -->
+  <header ref="{{ headerRef }}" onMouseLeave="{{ closeMenu }}" style="position:sticky;top:0;z-index:60;background:#FFFFFF;border-bottom:1px solid rgba(0,0,0,.1);transition:box-shadow .4s ease">
+
+    <!-- TOP BAR -->
+    <div style="max-width:1520px;margin:0 auto;padding:0 48px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative">
+      <div style="display:flex;gap:22px">
+        <sc-for list="{{ utilityLinks }}" as="ul" hint-placeholder-count="2">
+          <a href="{{ ul.href }}" style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#5A5A5A;text-decoration:none;white-space:nowrap;transition:color .2s" style-hover="color:#1A1A1A">{{ ul.label }}</a>
+        </sc-for>
+      </div>
+      <a href="Home.dc.html" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;text-decoration:none;color:#1A1A1A;white-space:nowrap">
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;letter-spacing:.4em;text-transform:uppercase;padding-left:.4em;line-height:1">Lussohomey</div>
+        <div style="font-family:'Jost',sans-serif;font-size:7.5px;letter-spacing:.44em;text-transform:uppercase;color:#8C8C8C;margin-top:4px;padding-left:.44em">Maison de Mobilier</div>
+      </a>
+      <div style="display:flex;align-items:center;gap:20px;color:#2A2A2A">
+        <button onClick="{{ openBooking }}" style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#1A1A1A;background:transparent;border:1px solid rgba(0,0,0,.5);padding:10px 18px;cursor:pointer;transition:background .3s,color .3s;white-space:nowrap" style-hover="background:#1A1A1A;color:#ffffff">Book Appointment</button>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="cursor:pointer"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="cursor:pointer"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+        <div style="position:relative;cursor:pointer">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+          <sc-if value="{{ cartShow }}" hint-placeholder-val="{{ false }}">
+            <span style="position:absolute;top:-8px;right:-9px;min-width:16px;height:16px;padding:0 4px;border-radius:9px;background:#1A1A1A;color:#ffffff;font-family:'Jost',sans-serif;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center">{{ cart }}</span>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV BAR -->
+    <div style="border-top:1px solid rgba(0,0,0,.1)">
+      <nav style="max-width:1520px;margin:0 auto;padding:0 48px;display:flex;justify-content:center;gap:40px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#2A2A2A">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <a href="{{ item.href }}" onMouseEnter="{{ item.enter }}" onFocus="{{ item.enter }}" style="display:flex;align-items:center;gap:6px;color:{{ item.color }};text-decoration:none;padding:16px 0;border-bottom:2px solid {{ item.underline }};transition:color .25s,border-color .25s;white-space:nowrap">
+            {{ item.label }}
+            <svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" style="opacity:.65;transform:rotate({{ item.caret }}deg);transition:transform .3s"><path d="M2 3.5L5 6.5L8 3.5"/></svg>
+          </a>
+        </sc-for>
+      </nav>
+    </div>
+
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div onMouseEnter="{{ keepMenu }}" style="position:absolute;top:100%;left:0;right:0;background:#FFFFFF;border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.14);box-shadow:0 30px 60px -30px rgba(0,0,0,.4);animation:lhMenu .34s cubic-bezier(.2,.7,.2,1) both">
+        <div style="max-width:1520px;margin:0 auto;padding:44px 48px 50px;display:grid;grid-template-columns:{{ panel.grid }};gap:56px">
+          <sc-for list="{{ panel.columns }}" as="col" hint-placeholder-count="3">
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:#8C8C8C;padding-bottom:16px;margin-bottom:8px;border-bottom:1px solid rgba(0,0,0,.12)">{{ col.title }}</div>
+              <div style="display:flex;flex-direction:column">
+                <sc-for list="{{ col.links }}" as="lnk" hint-placeholder-count="4">
+                  <a href="{{ lnk.href }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;text-decoration:none;padding:9px 0;color:#2A2A2A;border-bottom:1px solid transparent;transition:color .2s" style-hover="color:#1A1A1A">
+                    <span style="font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.2;color:inherit">{{ lnk.label }}</span>
+                    <sc-if value="{{ lnk.meta }}" hint-placeholder-val="Meta"><span style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.14em;color:#B0AA9E">{{ lnk.meta }}</span></sc-if>
+                  </a>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+          <div style="display:grid;grid-template-columns:repeat({{ panel.featuredCols }},1fr);gap:18px">
+            <sc-for list="{{ panel.featured }}" as="f" hint-placeholder-count="2">
+              <a href="{{ f.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)">
+                <div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED">
+                  <img src="{{ f.img }}" alt="{{ f.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%">
+                </div>
+                <div style="padding:15px 17px 18px">
+                  <div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ f.meta }}</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ f.name }}</div>
+                </div>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </header>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div onMouseEnter="{{ closeMenuNow }}" onClick="{{ closeMenuNow }}" style="position:fixed;inset:0;z-index:55;background:rgba(20,18,15,.28);animation:lhFade .3s ease both"></div>
+  </sc-if>
+
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:90;display:flex;justify-content:flex-end">
+      <div onClick="{{ toggleDrawer }}" style="position:absolute;inset:0;background:rgba(20,18,15,.4);animation:lhFade .3s ease both"></div>
+      <div style="position:relative;width:min(420px,88vw);height:100%;background:#FFFFFF;overflow-y:auto;animation:lhDrawer .36s cubic-bezier(.2,.7,.2,1) both;box-shadow:-30px 0 60px -30px rgba(0,0,0,.5)">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:22px 26px;border-bottom:1px solid rgba(0,0,0,.12)">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:20px;letter-spacing:.4em;text-transform:uppercase;padding-left:.4em;color:#1A1A1A">Lussohomey</div>
+          <button onClick="{{ toggleDrawer }}" aria-label="Close menu" style="background:transparent;border:none;cursor:pointer;color:#1A1A1A;padding:4px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+        </div>
+        <div style="padding:12px 0 40px">
+          <sc-for list="{{ drawerSections }}" as="sec" hint-placeholder-count="5">
+            <div style="border-bottom:1px solid rgba(0,0,0,.08)">
+              <button onClick="{{ sec.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:none;cursor:pointer;padding:20px 26px;text-align:left">
+                <span style="font-family:'Cormorant Garamond',serif;font-size:26px;color:#1A1A1A">{{ sec.label }}</span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#8C8C8C" stroke-width="1.3" style="transform:rotate({{ sec.caret }}deg);transition:transform .3s"><path d="M3 5l4 4 4-4"/></svg>
+              </button>
+              <sc-if value="{{ sec.open }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:0 26px 20px;display:flex;flex-direction:column;gap:2px">
+                  <sc-for list="{{ sec.links }}" as="dl" hint-placeholder-count="4">
+                    <a href="{{ dl.href }}" onClick="{{ toggleDrawer }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;text-decoration:none;padding:9px 0;font-family:'EB Garamond',serif;font-size:17px;color:#5A5A5A" style-hover="color:#1A1A1A"><span>{{ dl.label }}</span><sc-if value="{{ dl.meta }}" hint-placeholder-val="Meta"><span style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.14em;color:#B0AA9E">{{ dl.meta }}</span></sc-if></a>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+          <div style="padding:20px 26px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid rgba(0,0,0,.08)">
+            <sc-for list="{{ otherLinks }}" as="ol" hint-placeholder-count="2">
+              <a href="{{ ol.href }}" onClick="{{ toggleDrawer }}" style="text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:22px;color:#1A1A1A">{{ ol.label }}</a>
+            </sc-for>
+          </div>
+          <div style="padding:26px">
+            <button onClick="{{ openBookingFromDrawer }}" style="display:block;width:100%;text-align:center;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;background:#1A1A1A;color:#ffffff;padding:16px;border:none;cursor:pointer">Book Appointment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- BREADCRUMB -->
+  <div style="max-width:1520px;margin:0 auto;padding:22px 48px 0">
+    <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8C8C8C;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <a href="Home.dc.html" style="color:#8C8C8C;text-decoration:none" style-hover="color:#1A1A1A">Home</a>
+      <span>/</span>
+      <a href="Sofas Collection.dc.html" style="color:#8C8C8C;text-decoration:none" style-hover="color:#1A1A1A">Sofas</a>
+      <span>/</span>
+      <span style="color:#1A1A1A">{{ product.name }}</span>
+    </div>
+  </div>
+
+  <!-- PRODUCT DETAIL -->
+  <section style="max-width:1520px;margin:0 auto;padding:34px 48px 0;display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:start">
+
+    <!-- GALLERY -->
+    <div style="position:sticky;top:100px">
+      <div style="border:1px solid rgba(0,0,0,.14);aspect-ratio:4/3.4;overflow:hidden;background:#F4F1EC;margin-bottom:14px">
+        <img src="{{ activeShot.img }}" alt="{{ product.name }}" style="width:100%;height:100%;object-fit:cover;object-position:{{ activeShot.pos }}">
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        <sc-for list="{{ shots }}" as="sh" hint-placeholder-count="4">
+          <button onClick="{{ sh.onClick }}" style="padding:0;border:1px solid {{ sh.border }};cursor:pointer;aspect-ratio:1/1;overflow:hidden;background:#F4F1EC">
+            <img src="{{ sh.img }}" alt="{{ sh.label }}" style="width:100%;height:100%;object-fit:cover;object-position:{{ sh.pos }}">
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div>
+      <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#8C8C8C;margin-bottom:16px">{{ product.material }} · {{ product.style }}</div>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(32px,3.6vw,48px);line-height:1.06;margin:0 0 18px;color:#141414">{{ product.name }}</h1>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#1A1A1A;margin-bottom:26px">{{ product.priceLabel }}</div>
+      <p style="font-size:17px;line-height:1.75;color:#5A5A5A;margin:0 0 32px">{{ product.description }}</p>
+
+      <!-- COLOR / MATERIAL SWATCHES -->
+      <div style="margin-bottom:32px">
+        <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#1A1A1A;margin-bottom:14px">Upholstery — {{ activeSwatch.label }}</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <sc-for list="{{ swatches }}" as="sw" hint-placeholder-count="3">
+            <button onClick="{{ sw.onClick }}" title="{{ sw.title }}" style="position:relative;width:44px;height:44px;border-radius:50%;border:2px solid {{ sw.border }};background:{{ sw.color }};cursor:pointer;padding:0">
+              <sc-if value="{{ sw.locked }}" hint-placeholder-val="{{ false }}">
+                <span style="position:absolute;inset:-2px;border-radius:50%;background:rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-family:'Jost',sans-serif;font-size:8px;color:#1A1A1A">MTO</span>
+              </sc-if>
+            </button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ activeSwatch.locked }}" hint-placeholder-val="{{ false }}">
+          <div style="font-size:14px;color:#8C8C8C;margin-top:10px">Available by <a href="Made to Order.dc.html" style="color:#1A1A1A">Made to Order</a> commission.</div>
+        </sc-if>
+      </div>
+
+      <!-- ADD TO CART -->
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px">
+        <button onClick="{{ addToCart }}" style="font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:#1A1A1A;color:#ffffff;padding:18px 40px;border:none;cursor:pointer;transition:background .3s" style-hover="background:#3A3A3A">Add to Cart</button>
+        <button onClick="{{ openBooking }}" style="font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#1A1A1A;border:1px solid rgba(0,0,0,.5);padding:18px 30px;background:transparent;cursor:pointer;transition:border-color .3s,background .3s" style-hover="border-color:#1A1A1A;background:rgba(0,0,0,.06)">Book a Fitting Consultation</button>
+      </div>
+
+      <!-- SPECS -->
+      <div style="border-top:1px solid rgba(0,0,0,.14);padding-top:24px;margin-bottom:8px">
+        <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#1A1A1A;margin-bottom:16px">Materials &amp; Dimensions</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 24px">
+          <sc-for list="{{ specs }}" as="spec" hint-placeholder-count="4">
+            <div>
+              <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8C8C8C;margin-bottom:4px">{{ spec.k }}</div>
+              <div style="font-family:'EB Garamond',serif;font-size:16.5px;color:#1A1A1A">{{ spec.v }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- MADE TO ORDER NOTE -->
+      <div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.14);padding:22px 24px;margin:28px 0;display:flex;gap:16px;align-items:flex-start">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.3" style="flex-shrink:0;margin-top:2px"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1A1A1A;margin-bottom:6px">Want a different size or fabric?</div>
+          <div style="font-size:15.5px;line-height:1.65;color:#5A5A5A">This piece can be commissioned to your exact dimensions and any upholstery in our library through <a href="Made to Order.dc.html" style="color:#1A1A1A">Made to Order</a>.</div>
+        </div>
+      </div>
+
+      <!-- ACCORDION -->
+      <div style="border-top:1px solid rgba(0,0,0,.14)">
+        <sc-for list="{{ accordion }}" as="ac" hint-placeholder-count="4">
+          <div style="border-bottom:1px solid rgba(0,0,0,.14)">
+            <button onClick="{{ ac.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:transparent;border:none;cursor:pointer;padding:20px 0;text-align:left">
+              <span style="font-family:'Cormorant Garamond',serif;font-size:21px;color:#1A1A1A">{{ ac.title }}</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#8C8C8C" stroke-width="1.3" style="transform:rotate({{ ac.caret }}deg);transition:transform .3s;flex-shrink:0"><path d="M3 5l4 4 4-4"/></svg>
+            </button>
+            <sc-if value="{{ ac.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 0 22px;font-size:16px;line-height:1.75;color:#5A5A5A;max-width:560px">{{ ac.body }}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section style="max-width:1520px;margin:0 auto;padding:100px 48px 90px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:18px;margin-bottom:40px">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.04;margin:0;color:#141414">You May Also Like</h2>
+      <a href="Sofas Collection.dc.html" style="font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#2A2A2A;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.5);padding-bottom:6px;white-space:nowrap" style-hover="color:#1A1A1A">View All Sofas →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+      <sc-for list="{{ related }}" as="r" hint-placeholder-count="3">
+        <a href="{{ r.href }}" style="text-decoration:none;display:flex;flex-direction:column;background:#FFFFFF;border:1px solid rgba(0,0,0,.13);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.42);transform:translateY(-5px)">
+          <div style="height:280px;overflow:hidden;background:#F4F1EC">
+            <img src="{{ r.img }}" alt="{{ r.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 42%">
+          </div>
+          <div style="padding:18px 20px 20px">
+            <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8C8C8C;margin-bottom:8px">{{ r.material }} · {{ r.style }}</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#1A1A1A;margin-bottom:8px">{{ r.name }}</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#5A5A5A">{{ r.price }}</div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#F0EDE7;border-top:1px solid rgba(0,0,0,.16)">
+    <div style="max-width:1520px;margin:0 auto;padding:74px 48px 30px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:44px">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:26px;letter-spacing:.4em;text-transform:uppercase;padding-left:.4em;color:#1A1A1A">Lussohomey</div>
+        <p style="font-size:16px;line-height:1.7;color:#8C8C8C;max-width:320px;margin:18px 0 0">Heirloom furniture, made by hand for the considered home. Sofas, dining tables, and bedroom suites composed to last generations.</p>
+      </div>
+      <div>
+        <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#1A1A1A;margin-bottom:18px">Shop</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-family:'EB Garamond',serif;font-size:16px;color:#5A5A5A">
+          <a href="Sofas Collection.dc.html" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Sofas</a>
+          <a href="Home.dc.html#arrivals" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Chairs</a>
+          <a href="Home.dc.html#arrivals" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Tables</a>
+          <a href="Home.dc.html#arrivals" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Bedroom</a>
+          <a href="Home.dc.html#arrivals" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Storage &amp; Decor</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#1A1A1A;margin-bottom:18px">Service</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-family:'EB Garamond',serif;font-size:16px;color:#5A5A5A">
+          <a href="Home.dc.html#atelier" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Design Consultation</a>
+          <a href="Made to Order.dc.html" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Made to Order</a>
+          <a href="#" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">White-Glove Delivery</a>
+          <a href="#" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Care &amp; Guarantee</a>
+          <a href="#" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Trade Programme</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#1A1A1A;margin-bottom:18px">Atelier</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-family:'EB Garamond',serif;font-size:16px;color:#5A5A5A">
+          <a href="Home.dc.html#about" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Our Story</a>
+          <a href="Sustainability.dc.html" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Sustainability</a>
+          <a href="#" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Showrooms</a>
+          <a href="#" style="color:inherit;text-decoration:none" style-hover="color:#1A1A1A">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1520px;margin:0 auto;padding:24px 48px 40px;border-top:1px solid rgba(0,0,0,.12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">
+      <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#A0A0A0">© 2026 Lussohomey · Maison de Mobilier</div>
+      <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#A0A0A0;display:flex;gap:24px"><span>Privacy</span><span>Terms</span><span>Accessibility</span></div>
+    </div>
+  </footer>
+
+  <!-- BOOK APPOINTMENT MODAL -->
+  <sc-if value="{{ bookingOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px">
+      <div onClick="{{ closeBooking }}" style="position:absolute;inset:0;background:rgba(20,18,15,.5);animation:lhFade .3s ease both"></div>
+      <div style="position:relative;background:#FFFFFF;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 40px 90px -30px rgba(0,0,0,.6);animation:lhMenu .32s cubic-bezier(.2,.7,.2,1) both">
+        <button onClick="{{ closeBooking }}" aria-label="Close" style="position:absolute;top:18px;right:18px;background:transparent;border:none;cursor:pointer;color:#1A1A1A;padding:4px;z-index:2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+        <sc-if value="{{ bookingSubmitted }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:70px 44px;text-align:center">
+            <span style="display:inline-flex;width:52px;height:52px;border-radius:50%;background:#1A1A1A;color:#ffffff;align-items:center;justify-content:center;font-family:'Jost',sans-serif;font-size:22px;margin-bottom:26px">✓</span>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;margin:0 0 14px;color:#141414">Request Received</h3>
+            <p style="font-size:17px;line-height:1.7;color:#5A5A5A;max-width:380px;margin:0 auto">A member of our design team will be in touch within one business day to schedule your consultation.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ bookingSubmitted }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:48px 44px 44px">
+            <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#8C8C8C;margin-bottom:14px">Private Consultation</div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;line-height:1.1;margin:0 0 14px;color:#141414">Book an Appointment</h3>
+            <p style="font-size:16.5px;line-height:1.65;color:#5A5A5A;margin:0 0 30px">For full&#8209;home, office, or commercial commissions. Tell us about the project and our design team will schedule a call or studio visit.</p>
+            <form onSubmit="{{ onBookingSubmit }}" style="display:flex;flex-direction:column;gap:16px">
+              <input type="text" required placeholder="Full name" style="background:#FBF9F6;border:1px solid rgba(0,0,0,.25);color:#1A1A1A;font-family:'EB Garamond',serif;font-size:16px;padding:14px 16px;outline:none">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <input type="email" required placeholder="Email address" style="background:#FBF9F6;border:1px solid rgba(0,0,0,.25);color:#1A1A1A;font-family:'EB Garamond',serif;font-size:16px;padding:14px 16px;outline:none">
+                <input type="tel" placeholder="Phone" style="background:#FBF9F6;border:1px solid rgba(0,0,0,.25);color:#1A1A1A;font-family:'EB Garamond',serif;font-size:16px;padding:14px 16px;outline:none">
+              </div>
+              <select required style="background:#FBF9F6;border:1px solid rgba(0,0,0,.25);color:#1A1A1A;font-family:'EB Garamond',serif;font-size:16px;padding:14px 16px;outline:none">
+                <option value="">Project type</option>
+                <option>Single Room</option>
+                <option>Full Home</option>
+                <option>Office / Workplace</option>
+                <option>Commercial / Hospitality</option>
+                <option>Trade / Design Partner</option>
+              </select>
+              <textarea rows="3" placeholder="Tell us about the space and timeline" style="background:#FBF9F6;border:1px solid rgba(0,0,0,.25);color:#1A1A1A;font-family:'EB Garamond',serif;font-size:16px;padding:14px 16px;outline:none;resize:vertical"></textarea>
+              <button type="submit" style="font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;background:#1A1A1A;color:#ffffff;border:none;padding:16px;cursor:pointer;transition:background .3s;margin-top:6px" style-hover="background:#3A3A3A">Request Consultation</button>
+            </form>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- TOAST -->
+  <sc-if value="{{ toastShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;right:28px;bottom:28px;z-index:80;background:#FFFFFF;border:1px solid rgba(0,0,0,.4);padding:18px 22px;display:flex;align-items:center;gap:14px;box-shadow:0 24px 50px -20px rgba(0,0,0,.8);animation:lhToast .4s ease both">
+      <span style="width:34px;height:34px;border-radius:50%;background:#1A1A1A;color:#ffffff;display:flex;align-items:center;justify-content:center;font-family:'Jost',sans-serif;font-size:16px">✓</span>
+      <div>
+        <div style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#8C8C8C">Added to Cart</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:19px;color:#1A1A1A;margin-top:2px">{{ toast }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    openMenu: null, drawerOpen: false, drawerSec: null, bookingOpen: false, bookingSubmitted: false,
+    cart: 0, toast: null, shotIdx: 0, swatchIdx: 0, accOpen: 0,
+  };
+  headerRef = React.createRef();
+
+  openMenu(name) { clearTimeout(this._m); this.setState({ openMenu: name }); }
+  keepMenu() { clearTimeout(this._m); }
+  closeMenu() { clearTimeout(this._m); this._m = setTimeout(() => this.setState({ openMenu: null }), 130); }
+  closeMenuNow() { clearTimeout(this._m); this.setState({ openMenu: null }); }
+  toggleDrawer() { this.setState(s => ({ drawerOpen: !s.drawerOpen })); }
+  toggleSec(id) { this.setState(s => ({ drawerSec: s.drawerSec === id ? null : id })); }
+  openBooking() { this.setState({ bookingOpen: true, bookingSubmitted: false }); }
+  closeBooking() { this.setState({ bookingOpen: false }); }
+  openBookingFromDrawer() { this.setState({ drawerOpen: false, bookingOpen: true, bookingSubmitted: false }); }
+  setShot(i) { this.setState({ shotIdx: i }); }
+  setSwatch(i) { this.setState({ swatchIdx: i }); }
+  toggleAcc(i) { this.setState(s => ({ accOpen: s.accOpen === i ? -1 : i })); }
+
+  addToCart(name) {
+    if (this._t) clearTimeout(this._t);
+    this.setState(s => ({ cart: s.cart + 1, toast: name }));
+    this._t = setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+
+  componentDidMount() {
+    const h = this.headerRef && this.headerRef.current;
+    if (h) {
+      const onScroll = () => {
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        h.style.boxShadow = y > 40 ? '0 1px 0 rgba(0,0,0,0.08), 0 18px 40px -30px rgba(0,0,0,0.35)' : 'none';
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+  }
+
+  renderVals() {
+    const open = this.state.openMenu;
+    const CDN = 'https://cdn.shopify.com/s/files/1/0780/3145/4491/files/';
+    const rs = (n) => 'Rs. ' + n.toLocaleString('en-US');
+    const H = 'Home.dc.html';
+
+    // ---- HEADER MEGA MENU ----
+    const panels = {
+      sofas: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
+        columns: [{ title: 'Sofas', links: [
+          { label: 'Odette Sofa', meta: rs(525000), href: 'Product.dc.html?p=odette' },
+          { label: 'Cloud Sofa', meta: rs(320000), href: 'Product.dc.html?p=cloud' },
+          { label: 'Camaleonda', meta: rs(348000), href: 'Product.dc.html?p=camaleonda' },
+          { label: 'View All Sofas', meta: '', href: 'Sofas Collection.dc.html' },
+        ]}],
+        featured: [
+          { name: 'Odette Sofa', meta: 'Sofas · Signature', price: rs(525000), img: CDN + 'Sofascollection-26.webp', href: 'Product.dc.html?p=odette' },
+          { name: 'Rene Sofa', meta: 'Sofas · Statement', price: rs(678000), img: CDN + 'Sofascollection-10.jpg', href: 'Product.dc.html?p=rene' },
+        ]},
+      chairs: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
+        columns: [{ title: 'Chairs', links: [
+          { label: 'Cassina Chair', meta: rs(78000), href: H + '#arrivals' },
+          { label: 'Conroy Office Chair', meta: rs(259000), href: H + '#arrivals' },
+          { label: 'View All Chairs', meta: '', href: H + '#arrivals' },
+        ]}],
+        featured: [
+          { name: 'Cassina Chair', meta: 'Chairs · Rattan & Cane', price: rs(78000), img: CDN + 'Chairscollection-8-Copy_63617686-6c53-4bb7-a3f9-3e9436f5a57a.jpg', href: H + '#arrivals' },
+          { name: 'Conroy Leather Office Chair', meta: 'Chairs · Office', price: rs(259000), img: CDN + 'Chairscollection-35_0fec90e3-9de1-47c0-9924-7257089e69e1.jpg', href: H + '#arrivals' },
+        ]},
+      tables: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
+        columns: [{ title: 'Tables', links: [
+          { label: 'Pietra Oval Nero Marquina', meta: rs(725000), href: H + '#arrivals' },
+          { label: 'Giove', meta: rs(420000), href: H + '#arrivals' },
+          { label: 'View All Tables', meta: '', href: H + '#arrivals' },
+        ]}],
+        featured: [
+          { name: 'Pietra Oval Nero Marquina', meta: 'Tables · Dining', price: rs(725000), img: CDN + 'Dining_table_collection_-_14-3.jpg', href: H + '#arrivals' },
+          { name: 'Giove', meta: 'Tables · Coffee', price: rs(420000), img: CDN + 'tablelh28.jpg', href: H + '#arrivals' },
+        ]},
+      bedroom: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
+        columns: [{ title: 'Bedroom', links: [
+          { label: "Ca' Foscari Bed", meta: rs(495000), href: H + '#arrivals' },
+          { label: 'Elgon Bed', meta: rs(515000), href: H + '#arrivals' },
+          { label: 'View All Bedroom', meta: '', href: H + '#arrivals' },
+        ]}],
+        featured: [
+          { name: "Ca' Foscari Bed", meta: 'Bedroom · Signature', price: rs(495000), img: CDN + 'Bedscollection_Nightstands-18.webp', href: H + '#arrivals' },
+          { name: 'Elgon Bed', meta: 'Bedroom · Statement', price: rs(515000), img: CDN + 'Bedscollection_Nightstands-4.webp', href: H + '#arrivals' },
+        ]},
+      storage: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
+        columns: [{ title: 'Storage & Decor', links: [
+          { label: 'Majestic Cabinet', meta: rs(330000), href: H + '#arrivals' },
+          { label: 'Athos Mirror', meta: rs(215000), href: H + '#arrivals' },
+          { label: 'View All', meta: '', href: H + '#arrivals' },
+        ]}],
+        featured: [
+          { name: 'Majestic', meta: 'Storage · Cabinets', price: rs(330000), img: CDN + 'Storage_cabinet_-_18.jpg', href: H + '#arrivals' },
+          { name: 'Athos Mirror', meta: 'Décor · Mirrors', price: rs(215000), img: CDN + 'Accessories_LH_-_20.jpg', href: H + '#arrivals' },
+        ]},
+    };
+    const navDefs = [
+      { id: 'sofas', label: 'Sofas', href: 'Sofas Collection.dc.html', mega: true },
+      { id: 'chairs', label: 'Chairs', href: H + '#arrivals', mega: true },
+      { id: 'tables', label: 'Tables', href: H + '#arrivals', mega: true },
+      { id: 'bedroom', label: 'Bedroom', href: H + '#arrivals', mega: true },
+      { id: 'storage', label: 'Storage & Decor', href: H + '#arrivals', mega: true },
+    ];
+    const utilityLinks = [
+      { label: 'Sustainability', href: 'Sustainability.dc.html' },
+      { label: 'Made to Order', href: 'Made to Order.dc.html' },
+    ];
+    const navItems = navDefs.map(n => ({
+      ...n,
+      enter: n.mega ? () => this.openMenu(n.id) : () => this.closeMenuNow(),
+      color: open === n.id ? '#1A1A1A' : '#2A2A2A',
+      underline: open === n.id ? '#1A1A1A' : 'transparent',
+      caret: open === n.id ? 180 : 0,
+    }));
+    const drawerSections = navDefs.filter(n => n.mega).map(n => {
+      const p = panels[n.id];
+      const links = [];
+      p.columns.forEach(c => c.links.forEach(l => links.push({ label: l.label, meta: l.meta, href: l.href })));
+      return { label: n.label, links, open: this.state.drawerSec === n.id, caret: this.state.drawerSec === n.id ? 180 : 0, toggle: () => this.toggleSec(n.id) };
+    });
+
+    // ---- PRODUCT CATALOG (full detail) ----
+    const catalog = {
+      odette: { name: 'Odette Sofa', price: 525000, material: 'Linen', style: 'Contemporary', img: CDN + 'Sofascollection-26.webp',
+        description: 'A deep-seated silhouette upholstered by hand in our own workshop, built on a kiln-dried hardwood frame meant to be reupholstered, not replaced, for generations.',
+        dims: 'W 224 × D 96 × H 84 cm', frame: 'Kiln-dried hardwood, hand-joined', upholstery: 'Belgian linen blend', legs: 'Solid brass, brushed finish', fill: 'High-density foam over sprung base' },
+      cloud: { name: 'Cloud Sofa', price: 320000, material: 'Bouclé', style: 'Modern', img: CDN + 'Sofascollection-3.jpg',
+        description: 'A soft, rounded profile in bouclé, designed for sinking into — the frame is fully engineered for daily use in a busy living room.',
+        dims: 'W 210 × D 100 × H 78 cm', frame: 'Kiln-dried hardwood, hand-joined', upholstery: 'Wool bouclé', legs: 'Solid oak, natural finish', fill: 'High-density foam, feather-wrapped' },
+      kingston: { name: 'Kingston Sofa', price: 497000, material: 'Leather', style: 'Classic', img: CDN + 'Sofascollection-16.webp',
+        description: 'A tailored, tufted profile in full-grain leather that only improves with age — a formal sofa built for a room that receives.',
+        dims: 'W 232 × D 98 × H 88 cm', frame: 'Kiln-dried hardwood, hand-joined', upholstery: 'Full-grain leather', legs: 'Solid mahogany, hand-turned', fill: 'High-density foam over sprung base' },
+      richmond: { name: 'Richmond Sofa', price: 525000, material: 'Velvet', style: 'Classic', img: CDN + 'Sofascollection-4.webp',
+        description: 'A rolled-arm classic in deep velvet, finished with hand-tied box cushions for a silhouette that holds its shape for years.',
+        dims: 'W 226 × D 94 × H 86 cm', frame: 'Kiln-dried hardwood, hand-joined', upholstery: 'Cotton velvet', legs: 'Solid mahogany, hand-turned', fill: 'High-density foam, feather-wrapped' },
+      rene: { name: 'Rene Sofa', price: 678000, material: 'Leather', style: 'Contemporary', img: CDN + 'Sofascollection-10.jpg',
+        description: 'Our largest statement sofa, cut from full-grain leather over a reinforced frame built for a grand, well-used room.',
+        dims: 'W 240 × D 102 × H 90 cm', frame: 'Kiln-dried hardwood, reinforced joinery', upholstery: 'Full-grain leather', legs: 'Solid brass, brushed finish', fill: 'High-density foam over sprung base' },
+      camaleonda: { name: 'Camaleonda', price: 348000, material: 'Bouclé', style: 'Sectional & Modular', img: CDN + 'Sofascollection-34-1_932836d6-8edc-45e8-abd1-bf870df33c13.jpg',
+        description: 'A modular system of deep, cushion-like units in bouclé, built to be rearranged as your room — or your needs — change.',
+        dims: 'Modular, per-unit W 90 × D 90 × H 68 cm', frame: 'Kiln-dried hardwood modules', upholstery: 'Wool bouclé', legs: 'Concealed castors', fill: 'High-density foam, feather-topped' },
+      ignacio: { name: 'Ignacio Modular', price: 335000, material: 'Linen', style: 'Sectional & Modular', img: CDN + 'Sofascollection-21.webp',
+        description: 'A corner sectional in hard-wearing linen, configured for open-plan living rooms that need real seating capacity.',
+        dims: 'Modular, corner configuration W 300 × D 240 × H 70 cm', frame: 'Kiln-dried hardwood modules', upholstery: 'Belgian linen blend', legs: 'Solid oak, natural finish', fill: 'High-density foam over sprung base' },
+      falkor: { name: 'Falkor Sofa', price: 515000, material: 'Velvet', style: 'Modern', img: CDN + 'Sofascollection-14.jpg',
+        description: 'A low, wide-armed sofa in jewel-toned velvet, designed as a quiet centerpiece for a contemporary living room.',
+        dims: 'W 230 × D 96 × H 84 cm', frame: 'Kiln-dried hardwood, hand-joined', upholstery: 'Cotton velvet', legs: 'Solid brass, brushed finish', fill: 'High-density foam, feather-wrapped' },
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('p') || 'odette';
+    const raw = catalog[slug] || catalog.odette;
+    const product = { ...raw, priceLabel: rs(raw.price) };
+
+    const shotDefs = [
+      { label: 'Front', pos: 'center 42%' },
+      { label: 'Detail', pos: 'left 30%' },
+      { label: 'Side', pos: 'right 42%' },
+      { label: 'In the Room', pos: 'center 70%' },
+    ];
+    const shotIdx = this.state.shotIdx;
+    const shots = shotDefs.map((s, i) => ({
+      ...s, img: product.img,
+      onClick: () => this.setShot(i),
+      border: i === shotIdx ? '#1A1A1A' : 'rgba(0,0,0,.16)',
+    }));
+    const activeShot = { img: product.img, pos: shotDefs[shotIdx].pos };
+
+    const swatchDefs = [
+      { label: `${product.material} — as shown`, color: '#8C8577', locked: false },
+      { label: 'Alternate colorway', color: '#3A3A3A', locked: true },
+      { label: 'Alternate colorway', color: '#B7AA8E', locked: true },
+    ];
+    const swatchIdx = this.state.swatchIdx;
+    const swatches = swatchDefs.map((s, i) => ({
+      ...s, title: s.label,
+      onClick: () => this.setSwatch(i),
+      border: i === swatchIdx ? '#1A1A1A' : 'rgba(0,0,0,.2)',
+    }));
+    const activeSwatch = swatchDefs[swatchIdx];
+
+    const specs = [
+      { k: 'Dimensions', v: product.dims },
+      { k: 'Frame', v: product.frame },
+      { k: 'Upholstery', v: product.upholstery },
+      { k: 'Legs / Base', v: product.legs },
+      { k: 'Cushion Fill', v: product.fill },
+      { k: 'Guarantee', v: 'Lifetime structural guarantee' },
+    ];
+
+    const accDefs = [
+      { title: 'Shipping & Delivery', body: 'White-glove delivery and placement is complimentary on orders over Rs. 500,000. Standard lead time is 3–5 weeks for in-stock upholstery, or 8–14 weeks for a Made to Order commission.' },
+      { title: 'Returns & Exchanges', body: 'Stocked pieces may be returned within 14 days of delivery in original condition. Made to Order and bespoke commissions are final sale, as each is built specifically to your specification.' },
+      { title: 'Color & Material Disclaimer', body: 'Screen colors are an approximation. Natural materials such as leather, linen, and hardwood vary piece to piece — we recommend requesting a physical swatch before ordering, especially for large commissions.' },
+      { title: 'Care Instructions', body: 'Vacuum upholstery weekly with a soft brush attachment and blot spills immediately; avoid direct sunlight on leather and velvet. Full care guidance is included with every delivery.' },
+    ];
+    const accOpen = this.state.accOpen;
+    const accordion = accDefs.map((a, i) => ({ ...a, open: accOpen === i, caret: accOpen === i ? 180 : 0, toggle: () => this.toggleAcc(i) }));
+
+    const related = Object.keys(catalog).filter(k => k !== slug).slice(0, 3).map(k => {
+      const p = catalog[k];
+      return { name: p.name, material: p.material, style: p.style, img: p.img, price: rs(p.price), href: `Product.dc.html?p=${k}` };
+    });
+
+    return {
+      headerRef: this.headerRef,
+      navItems, menuOpen: !!open, panel: open ? panels[open] : panels.sofas,
+      keepMenu: () => this.keepMenu(), closeMenu: () => this.closeMenu(), closeMenuNow: () => this.closeMenuNow(),
+      drawerOpen: this.state.drawerOpen, drawerSections, toggleDrawer: () => this.toggleDrawer(),
+      otherLinks: utilityLinks,
+      utilityLinks,
+      bookingOpen: this.state.bookingOpen, bookingSubmitted: this.state.bookingSubmitted,
+      openBooking: () => this.openBooking(), closeBooking: () => this.closeBooking(),
+      openBookingFromDrawer: () => this.openBookingFromDrawer(),
+      onBookingSubmit: (e) => { e.preventDefault(); this.setState({ bookingSubmitted: true }); },
+      cart: this.state.cart, cartShow: this.state.cart > 0,
+      toast: this.state.toast, toastShow: !!this.state.toast,
+      addToCart: () => this.addToCart(product.name),
+      product, shots, activeShot, swatches, activeSwatch, specs, accordion, related,
+    };
+  }
+}
+</script>
+</body>
+</html>

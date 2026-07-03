@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#FFFFFF;color:#1A1A1A;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-family:'EB Garamond',Georgia,serif}
+  img{display:block;max-width:100%}
+  @keyframes lhMenu{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes lhFade{from{opacity:0}to{opacity:1}}
+  @keyframes lhDrawer{from{transform:translateX(100%)}to{transform:translateX(0)}}
+  @media(max-width:920px){
+    [data-mobile-hide]{display:none !important}
+    [data-mobile-only]{display:inline-flex !important}
+  }
+</style>
+</helmet>
+
+<div data-screen-label="Header" style="min-height:100vh;background:#FFFFFF">
+
+  <!-- ANNOUNCEMENT -->
+  <sc-if value="{{ showAnnouncement }}" hint-placeholder-val="{{ true }}">
+    <div style="background:#F0EDE7;color:#5A5A5A;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.26em;text-transform:uppercase;text-align:center;padding:11px 16px;border-bottom:1px solid rgba(0,0,0,.14)">{{ announcementText }}</div>
+  </sc-if>
+
+  <!-- HEADER -->
+  <header ref="{{ headerRef }}" onMouseLeave="{{ closeMenu }}" style="position:sticky;top:0;z-index:60;background:#FFFFFF;border-bottom:1px solid rgba(0,0,0,.1);transition:box-shadow .4s ease">
+    <div style="max-width:1520px;margin:0 auto;padding:0 48px;height:80px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px">
+
+      <!-- LEFT NAV -->
+      <nav style="display:flex;gap:34px;font-family:'Jost',sans-serif;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase" data-mobile-hide="1">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="3">
+          <a href="{{ item.href }}" onMouseEnter="{{ item.enter }}" onFocus="{{ item.enter }}" style="display:flex;align-items:center;gap:7px;color:{{ item.color }};text-decoration:none;padding:29px 0;border-bottom:2px solid {{ item.underline }};transition:color .25s,border-color .25s;white-space:nowrap">
+            {{ item.label }}
+            <sc-if value="{{ item.hasCaret }}" hint-placeholder-val="{{ true }}">
+              <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" style="opacity:.7;transform:rotate({{ item.caret }}deg);transition:transform .3s"><path d="M2 3.5L5 6.5L8 3.5"/></svg>
+            </sc-if>
+          </a>
+        </sc-for>
+      </nav>
+
+      <!-- MOBILE MENU BUTTON -->
+      <button onClick="{{ toggleDrawer }}" aria-label="Open menu" data-mobile-only="1" style="display:none;background:transparent;border:none;padding:0;cursor:pointer;color:#1A1A1A;justify-self:start;align-items:center">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
+      <!-- LOGO -->
+      <a href="#" style="text-align:center;text-decoration:none;color:#1A1A1A">
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:26px;letter-spacing:.46em;text-transform:uppercase;padding-left:.46em;line-height:1">{{ brand }}</div>
+        <div style="font-family:'Jost',sans-serif;font-size:8.5px;letter-spacing:.5em;text-transform:uppercase;color:#8C8C8C;margin-top:5px;padding-left:.5em">Maison de Mobilier</div>
+      </a>
+
+      <!-- RIGHT ICONS -->
+      <div style="display:flex;justify-content:flex-end;align-items:center;gap:24px;color:#2A2A2A">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="cursor:pointer"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="cursor:pointer" data-mobile-hide="1"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" style="cursor:pointer"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>
+      </div>
+    </div>
+
+    <!-- COLLECTION MEGA MENU -->
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div onMouseEnter="{{ keepMenu }}" style="position:absolute;top:100%;left:0;right:0;background:#FFFFFF;border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.14);box-shadow:0 30px 60px -30px rgba(0,0,0,.4);animation:lhMenu .34s cubic-bezier(.2,.7,.2,1) both">
+        <div style="max-width:1520px;margin:0 auto;padding:46px 48px 52px;display:grid;grid-template-columns:1.5fr 1fr;gap:64px">
+
+          <!-- CATEGORY LIST -->
+          <div>
+            <div style="font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:#8C8C8C;padding-bottom:20px;margin-bottom:12px;border-bottom:1px solid rgba(0,0,0,.12)">Shop the Collection</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:48px;row-gap:2px">
+              <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="9">
+                <a href="{{ cat.href }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;text-decoration:none;padding:11px 0;color:#2A2A2A;transition:color .2s" style-hover="color:#1A1A1A">
+                  <span style="font-family:'Cormorant Garamond',serif;font-size:23px;line-height:1.2;color:inherit">{{ cat.label }}</span>
+                  <sc-if value="{{ cat.meta }}" hint-placeholder-val="Meta"><span style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.14em;color:#B0AA9E">{{ cat.meta }}</span></sc-if>
+                </a>
+              </sc-for>
+            </div>
+            <a href="#" style="display:inline-block;margin-top:26px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#1A1A1A;text-decoration:none;border-bottom:1px solid #1A1A1A;padding-bottom:6px">View Entire Collection →</a>
+          </div>
+
+          <!-- FEATURED -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+            <sc-for list="{{ featured }}" as="f" hint-placeholder-count="2">
+              <a href="{{ f.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)">
+                <div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED">
+                  <img src="{{ f.img }}" alt="{{ f.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%">
+                </div>
+                <div style="padding:15px 17px 18px">
+                  <div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ f.meta }}</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ f.name }}</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:#5A5A5A;margin-top:6px">{{ f.price }}</div>
+                </div>
+              </a>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </header>
+
+  <!-- BACKDROP -->
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div onMouseEnter="{{ closeMenuNow }}" onClick="{{ closeMenuNow }}" style="position:fixed;inset:0;z-index:55;background:rgba(20,18,15,.28);animation:lhFade .3s ease both"></div>
+  </sc-if>
+
+  <!-- DEMO PAGE HINT -->
+  <div style="max-width:1520px;margin:0 auto;padding:120px 48px;text-align:center">
+    <div style="font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#B0AA9E;margin-bottom:22px">Header Component</div>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,68px);line-height:1.04;margin:0;color:#141414">Hover <span style="font-style:italic">“Collection”</span><br>to preview the mega menu</h1>
+  </div>
+
+  <!-- MOBILE DRAWER -->
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:90;display:flex;justify-content:flex-end">
+      <div onClick="{{ toggleDrawer }}" style="position:absolute;inset:0;background:rgba(20,18,15,.4);animation:lhFade .3s ease both"></div>
+      <div style="position:relative;width:min(430px,90vw);height:100%;background:#FFFFFF;overflow-y:auto;animation:lhDrawer .36s cubic-bezier(.2,.7,.2,1) both;box-shadow:-30px 0 60px -30px rgba(0,0,0,.5)">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:22px 26px;border-bottom:1px solid rgba(0,0,0,.12)">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:21px;letter-spacing:.4em;text-transform:uppercase;padding-left:.4em;color:#1A1A1A">{{ brand }}</div>
+          <button onClick="{{ toggleDrawer }}" aria-label="Close menu" style="background:transparent;border:none;cursor:pointer;color:#1A1A1A;padding:4px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+        </div>
+        <div style="padding:8px 0 40px">
+          <div style="padding:22px 26px 10px;font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:#8C8C8C">Collection</div>
+          <div style="padding:0 26px;display:flex;flex-direction:column">
+            <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="9">
+              <a href="{{ cat.href }}" onClick="{{ toggleDrawer }}" style="text-decoration:none;padding:11px 0;font-family:'Cormorant Garamond',serif;font-size:23px;color:#1A1A1A;border-bottom:1px solid rgba(0,0,0,.07)">{{ cat.label }}</a>
+            </sc-for>
+          </div>
+          <div style="padding:22px 26px;display:flex;flex-direction:column;gap:4px">
+            <a href="#" onClick="{{ toggleDrawer }}" style="text-decoration:none;padding:11px 0;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#2A2A2A">Projects</a>
+            <a href="#" onClick="{{ toggleDrawer }}" style="text-decoration:none;padding:11px 0;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#2A2A2A">About</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 860 },
+  &quot;brand&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Lussohomey&quot;, &quot;tsType&quot;: &quot;string&quot; },
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#1A1A1A&quot;, &quot;options&quot;: [&quot;#1A1A1A&quot;, &quot;#5A5A4E&quot;, &quot;#6E5844&quot;, &quot;#2E3A2E&quot;], &quot;tsType&quot;: &quot;string&quot; },
+  &quot;showAnnouncement&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot; },
+  &quot;announcementText&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Complimentary white-glove delivery &amp; placement on orders over $5,000&quot;, &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  state = { openMenu: null, drawerOpen: false };
+  headerRef = React.createRef();
+
+  openMenu(n) { clearTimeout(this._m); this.setState({ openMenu: n }); }
+  keepMenu() { clearTimeout(this._m); }
+  closeMenu() { clearTimeout(this._m); this._m = setTimeout(() => this.setState({ openMenu: null }), 130); }
+  closeMenuNow() { clearTimeout(this._m); this.setState({ openMenu: null }); }
+  toggleDrawer() { this.setState(s => ({ drawerOpen: !s.drawerOpen })); }
+
+  componentDidMount() {
+    const h = this.headerRef && this.headerRef.current;
+    if (h) {
+      const onScroll = () => {
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        h.style.boxShadow = y > 30 ? '0 1px 0 rgba(0,0,0,0.08), 0 18px 40px -30px rgba(0,0,0,0.35)' : 'none';
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#1A1A1A';
+    const open = this.state.openMenu;
+
+    const categories = [
+      'Accessories', 'Beds & Nightstands', 'Chairs', 'Consoles', 'Dining Tables',
+      'Ottomans', 'Side Boards & Cabinets', 'Sofas', 'Tables & Desks',
+    ].map(label => ({ label, href: '#', meta: label === 'Chairs' ? '19' : '' }));
+
+    const featured = [
+      { name: 'Oslo Lounge Chair', meta: 'New · Scandinavian', price: '₹39,999', img: 'assets/sofa-grey.png', href: '#' },
+      { name: 'Galea Dining Chair', meta: 'New · Chairs', price: '₹38,888', img: 'assets/cane-cabinet.png', href: '#' },
+    ];
+
+    const navDefs = [
+      { id: 'collection', label: 'Collection', href: '#', mega: true },
+      { id: 'projects', label: 'Projects', href: '#', mega: false },
+      { id: 'about', label: 'About', href: '#', mega: false },
+    ];
+    const navItems = navDefs.map(n => ({
+      label: n.label, href: n.href, hasCaret: n.mega,
+      enter: n.mega ? () => this.openMenu(n.id) : () => this.closeMenuNow(),
+      color: (open === n.id) ? accent : '#2A2A2A',
+      underline: (open === n.id) ? accent : 'transparent',
+      caret: (open === n.id) ? 180 : 0,
+    }));
+
+    return {
+      headerRef: this.headerRef,
+      brand: this.props.brand ?? 'Lussohomey',
+      showAnnouncement: this.props.showAnnouncement ?? true,
+      announcementText: this.props.announcementText ?? 'Complimentary white-glove delivery & placement on orders over $5,000',
+      navItems,
+      categories,
+      featured,
+      menuOpen: open === 'collection',
+      keepMenu: () => this.keepMenu(),
+      closeMenu: () => this.closeMenu(),
+      closeMenuNow: () => this.closeMenuNow(),
+      drawerOpen: this.state.drawerOpen,
+      toggleDrawer: () => this.toggleDrawer(),
+    };
+  }
+}
+</script>
+</body>
+</html>
