@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<template id="__bundler_thumbnail" data-bg-color="#F4F1EC"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#F4F1EC"/><text x="100" y="105" font-family="Georgia, serif" font-size="26" letter-spacing="3" fill="#1A1A1A" text-anchor="middle">LH</text></svg></template>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
@@ -80,24 +81,17 @@
                 <sc-for list="{{ col.links }}" as="lnk" hint-placeholder-count="4">
                   <a href="{{ lnk.href }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;text-decoration:none;padding:9px 0;color:#2A2A2A;border-bottom:1px solid transparent;transition:color .2s" style-hover="color:#1A1A1A">
                     <span style="font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.2;color:inherit">{{ lnk.label }}</span>
-                    <sc-if value="{{ lnk.meta }}" hint-placeholder-val="Meta"><span style="font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.14em;color:#B0AA9E">{{ lnk.meta }}</span></sc-if>
                   </a>
                 </sc-for>
               </div>
             </div>
           </sc-for>
           <div style="display:grid;grid-template-columns:repeat({{ panel.featuredCols }},1fr);gap:18px">
-            <sc-for list="{{ panel.featured }}" as="f" hint-placeholder-count="2">
-              <a href="{{ f.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)">
-                <div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED">
-                  <img src="{{ f.img }}" alt="{{ f.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%">
-                </div>
-                <div style="padding:15px 17px 18px">
-                  <div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ f.meta }}</div>
-                  <div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ f.name }}</div>
-                </div>
-              </a>
-            </sc-for>
+            <sc-if value="{{ sofasOpen }}" hint-placeholder-val="{{ false }}"><a href="{{ sofasF0.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/Sofascollection-26.webp" alt="{{ sofasF0.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ sofasF0.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ sofasF0.name }}</div></div></a><a href="{{ sofasF1.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/Sofascollection-10.jpg" alt="{{ sofasF1.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ sofasF1.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ sofasF1.name }}</div></div></a></sc-if>
+            <sc-if value="{{ chairsOpen }}" hint-placeholder-val="{{ false }}"><a href="{{ chairsF0.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/Chairscollection-8-Copy_63617686-6c53-4bb7-a3f9-3e9436f5a57a.jpg" alt="{{ chairsF0.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ chairsF0.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ chairsF0.name }}</div></div></a><a href="{{ chairsF1.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/Chairscollection-35_0fec90e3-9de1-47c0-9924-7257089e69e1.jpg" alt="{{ chairsF1.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ chairsF1.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ chairsF1.name }}</div></div></a></sc-if>
+            <sc-if value="{{ tablesOpen }}" hint-placeholder-val="{{ false }}"><a href="{{ tablesF0.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/Dining_table_collection_-_14-3.jpg" alt="{{ tablesF0.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ tablesF0.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ tablesF0.name }}</div></div></a><a href="{{ tablesF1.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/tablelh28.jpg" alt="{{ tablesF1.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ tablesF1.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ tablesF1.name }}</div></div></a></sc-if>
+            <sc-if value="{{ bedroomOpen }}" hint-placeholder-val="{{ false }}"><a href="{{ bedroomF0.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/Bedscollection_Nightstands-18.webp" alt="{{ bedroomF0.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ bedroomF0.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ bedroomF0.name }}</div></div></a><a href="{{ bedroomF1.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/Bedscollection_Nightstands-4.webp" alt="{{ bedroomF1.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ bedroomF1.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ bedroomF1.name }}</div></div></a></sc-if>
+            <sc-if value="{{ storageOpen }}" hint-placeholder-val="{{ false }}"><a href="{{ storageF0.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/Storage_cabinet_-_18.jpg" alt="{{ storageF0.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ storageF0.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ storageF0.name }}</div></div></a><a href="{{ storageF1.href }}" style="text-decoration:none;display:block;background:#FBF9F6;border:1px solid rgba(0,0,0,.12);transition:border-color .3s,transform .3s" style-hover="border-color:rgba(0,0,0,.5);transform:translateY(-4px)"><div style="aspect-ratio:4/3;overflow:hidden;background:#F3F1ED"><img src="https://cdn.shopify.com/s/files/1/0780/3145/4491/files/Accessories_LH_-_20.jpg" alt="{{ storageF1.name }}" style="width:100%;height:100%;object-fit:cover;object-position:center 58%"></div><div style="padding:15px 17px 18px"><div style="font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:#8C8C8C;margin-bottom:7px">{{ storageF1.meta }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.15;color:#1A1A1A">{{ storageF1.name }}</div></div></a></sc-if>
           </div>
         </div>
       </div>
@@ -347,67 +341,67 @@ class Component extends DCLogic {
     const panels = {
       sofas: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
         columns: [{ title: 'Sofas', links: [
-          { label: 'Odette Sofa', meta: rs(525000), href: H + '#arrivals' },
-          { label: 'Cloud Sofa', meta: rs(320000), href: H + '#arrivals' },
-          { label: 'Camaleonda', meta: rs(348000), href: H + '#arrivals' },
-          { label: 'View All Sofas', meta: '', href: H + '#arrivals' },
+          { label: 'Odette Sofa', meta: rs(525000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Cloud Sofa', meta: rs(320000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Camaleonda', meta: rs(348000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'View All Sofas', meta: '', href: H + 'Sofas Collection.dc.html' },
         ]}],
         featured: [
-          { name: 'Odette Sofa', meta: 'Sofas · Signature', price: rs(525000), img: CDN + 'Sofascollection-26.webp', href: H + '#arrivals' },
-          { name: 'Rene Sofa', meta: 'Sofas · Statement', price: rs(678000), img: CDN + 'Sofascollection-10.jpg', href: H + '#arrivals' },
+          { name: 'Odette Sofa', meta: 'Sofas · Signature', price: rs(525000), img: CDN + 'Sofascollection-26.webp', href: H + 'Sofas Collection.dc.html' },
+          { name: 'Rene Sofa', meta: 'Sofas · Statement', price: rs(678000), img: CDN + 'Sofascollection-10.jpg', href: H + 'Sofas Collection.dc.html' },
         ]},
       chairs: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
         columns: [{ title: 'Chairs', links: [
-          { label: 'Cassina Chair', meta: rs(78000), href: H + '#arrivals' },
-          { label: 'Conroy Office Chair', meta: rs(259000), href: H + '#arrivals' },
-          { label: 'Lotus Chair', meta: rs(115000), href: H + '#arrivals' },
-          { label: 'View All Chairs', meta: '', href: H + '#arrivals' },
+          { label: 'Cassina Chair', meta: rs(78000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Conroy Office Chair', meta: rs(259000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Lotus Chair', meta: rs(115000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'View All Chairs', meta: '', href: H + 'Sofas Collection.dc.html' },
         ]}],
         featured: [
-          { name: 'Cassina Chair', meta: 'Chairs · Rattan & Cane', price: rs(78000), img: CDN + 'Chairscollection-8-Copy_63617686-6c53-4bb7-a3f9-3e9436f5a57a.jpg', href: H + '#arrivals' },
-          { name: 'Conroy Leather Office Chair', meta: 'Chairs · Office', price: rs(259000), img: CDN + 'Chairscollection-35_0fec90e3-9de1-47c0-9924-7257089e69e1.jpg', href: H + '#arrivals' },
+          { name: 'Cassina Chair', meta: 'Chairs · Rattan & Cane', price: rs(78000), img: CDN + 'Chairscollection-8-Copy_63617686-6c53-4bb7-a3f9-3e9436f5a57a.jpg', href: H + 'Sofas Collection.dc.html' },
+          { name: 'Conroy Leather Office Chair', meta: 'Chairs · Office', price: rs(259000), img: CDN + 'Chairscollection-35_0fec90e3-9de1-47c0-9924-7257089e69e1.jpg', href: H + 'Sofas Collection.dc.html' },
         ]},
       tables: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
         columns: [{ title: 'Tables', links: [
-          { label: 'Pietra Oval Nero Marquina', meta: rs(725000), href: H + '#arrivals' },
-          { label: 'Giove', meta: rs(420000), href: H + '#arrivals' },
-          { label: 'Anneau Console', meta: rs(220000), href: H + '#arrivals' },
-          { label: 'View All Tables', meta: '', href: H + '#arrivals' },
+          { label: 'Pietra Oval Nero Marquina', meta: rs(725000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Giove', meta: rs(420000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Anneau Console', meta: rs(220000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'View All Tables', meta: '', href: H + 'Sofas Collection.dc.html' },
         ]}],
         featured: [
-          { name: 'Pietra Oval Nero Marquina', meta: 'Tables · Dining', price: rs(725000), img: CDN + 'Dining_table_collection_-_14-3.jpg', href: H + '#arrivals' },
-          { name: 'Giove', meta: 'Tables · Coffee', price: rs(420000), img: CDN + 'tablelh28.jpg', href: H + '#arrivals' },
+          { name: 'Pietra Oval Nero Marquina', meta: 'Tables · Dining', price: rs(725000), img: CDN + 'Dining_table_collection_-_14-3.jpg', href: H + 'Sofas Collection.dc.html' },
+          { name: 'Giove', meta: 'Tables · Coffee', price: rs(420000), img: CDN + 'tablelh28.jpg', href: H + 'Sofas Collection.dc.html' },
         ]},
       bedroom: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
         columns: [{ title: 'Bedroom', links: [
-          { label: "Ca' Foscari Bed", meta: rs(495000), href: H + '#arrivals' },
-          { label: 'Elgon Bed', meta: rs(515000), href: H + '#arrivals' },
-          { label: 'Waltz Nightstand', meta: rs(135000), href: H + '#arrivals' },
-          { label: 'View All Bedroom', meta: '', href: H + '#arrivals' },
+          { label: "Ca' Foscari Bed", meta: rs(495000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Elgon Bed', meta: rs(515000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Waltz Nightstand', meta: rs(135000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'View All Bedroom', meta: '', href: H + 'Sofas Collection.dc.html' },
         ]}],
         featured: [
-          { name: "Ca' Foscari Bed", meta: 'Bedroom · Signature', price: rs(495000), img: CDN + 'Bedscollection_Nightstands-18.webp', href: H + '#arrivals' },
-          { name: 'Elgon Bed', meta: 'Bedroom · Statement', price: rs(515000), img: CDN + 'Bedscollection_Nightstands-4.webp', href: H + '#arrivals' },
+          { name: "Ca' Foscari Bed", meta: 'Bedroom · Signature', price: rs(495000), img: CDN + 'Bedscollection_Nightstands-18.webp', href: H + 'Sofas Collection.dc.html' },
+          { name: 'Elgon Bed', meta: 'Bedroom · Statement', price: rs(515000), img: CDN + 'Bedscollection_Nightstands-4.webp', href: H + 'Sofas Collection.dc.html' },
         ]},
       storage: { grid: '1fr 1fr 1.4fr', featuredCols: 2,
         columns: [{ title: 'Storage & Decor', links: [
-          { label: 'Majestic Cabinet', meta: rs(330000), href: H + '#arrivals' },
-          { label: 'Athos Mirror', meta: rs(215000), href: H + '#arrivals' },
-          { label: 'Bell Lamp', meta: rs(325000), href: H + '#arrivals' },
-          { label: 'View All', meta: '', href: H + '#arrivals' },
+          { label: 'Majestic Cabinet', meta: rs(330000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Athos Mirror', meta: rs(215000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'Bell Lamp', meta: rs(325000), href: H + 'Sofas Collection.dc.html' },
+          { label: 'View All', meta: '', href: H + 'Sofas Collection.dc.html' },
         ]}],
         featured: [
-          { name: 'Majestic', meta: 'Storage · Cabinets', price: rs(330000), img: CDN + 'Storage_cabinet_-_18.jpg', href: H + '#arrivals' },
-          { name: 'Athos Mirror', meta: 'Décor · Mirrors', price: rs(215000), img: CDN + 'Accessories_LH_-_20.jpg', href: H + '#arrivals' },
+          { name: 'Majestic', meta: 'Storage · Cabinets', price: rs(330000), img: CDN + 'Storage_cabinet_-_18.jpg', href: H + 'Sofas Collection.dc.html' },
+          { name: 'Athos Mirror', meta: 'Décor · Mirrors', price: rs(215000), img: CDN + 'Accessories_LH_-_20.jpg', href: H + 'Sofas Collection.dc.html' },
         ]},
     };
 
     const navDefs = [
-      { id: 'sofas', label: 'Sofas', href: H + '#arrivals', mega: true },
-      { id: 'chairs', label: 'Chairs', href: H + '#arrivals', mega: true },
-      { id: 'tables', label: 'Tables', href: H + '#arrivals', mega: true },
-      { id: 'bedroom', label: 'Bedroom', href: H + '#arrivals', mega: true },
-      { id: 'storage', label: 'Storage & Decor', href: H + '#arrivals', mega: true },
+      { id: 'sofas', label: 'Sofas', href: H + 'Sofas Collection.dc.html', mega: true },
+      { id: 'chairs', label: 'Chairs', href: H + 'Sofas Collection.dc.html', mega: true },
+      { id: 'tables', label: 'Tables', href: H + 'Sofas Collection.dc.html', mega: true },
+      { id: 'bedroom', label: 'Bedroom', href: H + 'Sofas Collection.dc.html', mega: true },
+      { id: 'storage', label: 'Storage & Decor', href: H + 'Sofas Collection.dc.html', mega: true },
     ];
     const utilityLinks = [
       { label: 'Sustainability', href: 'Sustainability.dc.html' },
@@ -432,6 +426,12 @@ class Component extends DCLogic {
     });
 
     return {
+      sofasF0: panels.sofas.featured[0], sofasF1: panels.sofas.featured[1],
+      chairsF0: panels.chairs.featured[0], chairsF1: panels.chairs.featured[1],
+      tablesF0: panels.tables.featured[0], tablesF1: panels.tables.featured[1],
+      bedroomF0: panels.bedroom.featured[0], bedroomF1: panels.bedroom.featured[1],
+      storageF0: panels.storage.featured[0], storageF1: panels.storage.featured[1],
+      sofasOpen: open === 'sofas', chairsOpen: open === 'chairs', tablesOpen: open === 'tables', bedroomOpen: open === 'bedroom', storageOpen: open === 'storage',
       headerRef: this.headerRef,
       navItems,
       menuOpen: !!open,
